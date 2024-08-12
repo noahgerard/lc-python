@@ -21,8 +21,7 @@ def productExceptSelf(nums):
 
 
 # 1st Solution based on https://www.youtube.com/watch?v=bNvIQI2wAjk
-"""
-This one only beats 5% of submissions. Time to make it better :)
+# This one only beats 5% of submissions. Time to make it better :)
 """
 def productExceptSelf(nums):
 	prefix = []
@@ -48,5 +47,23 @@ def productExceptSelf(nums):
 		nums[idx] = (prefix[idx - 1] if idx - 1 >= 0 else 1) * (postfix[idx + 1] if idx + 1 < n_len else 1)
 
 	return nums
+"""
+
+# Same concept as above but, no reverse and instead using fixed array instead of dynamic array
+# Exact copy of NeetCode's solution but I understand it better now
+def productExceptSelf(nums):
+	result = [1] * len(nums)
+
+	prefix = 1
+	for n in range(len(nums)):
+		result[n] = prefix
+		prefix *= nums[n]
+	
+	postfix = 1
+	for n in range(len(nums) - 1, -1, -1):
+		result[n] *= postfix
+		postfix *= nums[n]
+
+	return result
 
 print(productExceptSelf([1, 2, 3, 4]))
